@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { Readable } from 'stream'
+import { json } from 'stream/consumers';
 import Stripe from 'stripe';
 import { stripe } from '../../services/stripe';
 import { saveSubscription } from './_lib/manageSubscription';
@@ -23,7 +24,9 @@ export const config = {
 }
 
 const relevantEvents = new Set([
-  "checkout.session.completed"
+  "checkout.session.completed",
+  "customer.subscription.updated",
+  "customer.subscription.deleted",
 ])
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
@@ -44,19 +47,39 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (relevantEvents.has(type)) {
       try {
-          switch (type) {
-              case 'checkout.session.completed':
-                  const checkoutSession = event.data.object as Stripe.Checkout.Session
-                 
-                  await saveSubscription(
-                      checkoutSession.subscription.toString(),
-                      checkoutSession.customer.toString()
-                  )
-          }
+        switch (type) {
+          case 'customer.subscription.updated': break;
+          case 'customer.subscription.deleted': 
+            const subscription = event.data.object as Stripe.Subscription //I'm typing my object
+              
+            await saveSubscription(
+                subscription.id,
+                subscription.customer.toString(),
+                false
+            )
+
+          break;
+
+          case 'checkout.session.completed':
+            
+            const checkoutSession = event.data.object as Stripe.Checkout.Session //I'm typing my object
+            
+            await saveSubscription(
+                checkoutSession.subscription.toString(),
+                checkoutSession.customer.toString(),
+                true
+            )
+
+            break;
+          default: 
+            throw new Error('Unhandled event.')    
+        }
+      } catch (err) {
+        return res.json({ error: 'Webhook handler failed.' })
       }
     }
 
-    return res.status(200).json({ received: true })
+    res.status(200).json({ received: true })
   } else {
     res.setHeader('Allow', 'POST');
     res.status(405).end('Method not Allowed');
