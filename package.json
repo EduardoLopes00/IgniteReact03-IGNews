@@ -11,6 +11,7 @@
     "version": "cross-env-shell NG_APPVERSION=$npm_package_version node ./node_modules/ng-node-environment/index.js"
   },
   "dependencies": {
+    "@prismicio/client": "^5.1.0",
     "@stripe/stripe-js": "^1.22.0",
     "axios": "^0.24.0",
     "faunadb": "^4.4.1",

@@ -38,12 +38,6 @@ export async function saveSubscription(
     )
 
   } else {
-    console.log('Entrou!!')
-    
-    logError('Index sub by ID', q.Index('subscription_by_id'));
-    
-    logError('Subscription Object', subscriptionData)
-    
     try {
         await fauna.query(
             q.Replace(

@@ -13,8 +13,16 @@ export function Header(){
                     </a>
                 </Link> 
                 <nav>
-                    <a className={styles.active}>Home</a>
-                    <a>Posts</a>
+                    <Link href="http://localhost:3000/">
+                        <a className={styles.active}>Home
+                        
+                        </a>
+                    </Link> 
+
+                    <Link href="http://localhost:3000/posts">
+                      <a>Posts</a>
+                    </Link> 
+                    
                 </nav>
                 
                 <SignInButton />
