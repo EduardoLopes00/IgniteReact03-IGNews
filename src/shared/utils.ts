@@ -1,4 +1,4 @@
-export function logError (title = "", message) {
+export function logError (message, title = "") {
     console.log("                                  ")    
     console.log("==================================")    
     console.log("                                  ")
