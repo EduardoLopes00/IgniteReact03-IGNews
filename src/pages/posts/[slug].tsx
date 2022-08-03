@@ -14,8 +14,13 @@ interface PostProps {
   }
 }
 
-interface Publication {
-  data: { title: string; content: string }
+export interface HTMLTextFragment {
+  type: string
+  text: string
+}
+
+export interface Publication {
+  data: { title: HTMLTextFragment[]; content: HTMLTextFragment[] }
   last_publication_date: string
 }
 
