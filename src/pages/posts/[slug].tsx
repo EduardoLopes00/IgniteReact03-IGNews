@@ -4,6 +4,7 @@ import Head from 'next/head'
 import { RichText } from 'prismic-dom'
 import { getPrismicClient } from '../../services/prismic'
 import styles from './post.module.scss'
+import React from 'react'
 
 interface PostProps {
   post: {
@@ -20,8 +21,8 @@ export interface HTMLTextFragment {
 }
 
 export interface Publication {
-  data: { title: HTMLTextFragment[]; content: HTMLTextFragment[] }
-  last_publication_date: string
+  title: HTMLTextFragment[]
+  content: HTMLTextFragment[]
 }
 
 export default function Post({ post }: PostProps) {
@@ -63,7 +64,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 
   const prismic = getPrismicClient(req)
 
-  const response: Publication = await prismic.getByUID(
+  const response = await prismic.getByUID<Publication>(
     'publication',
     String(slug),
     {},

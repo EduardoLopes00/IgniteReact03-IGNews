@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import { RichText } from 'prismic-dom'
 import { useEffect } from 'react'
 import { getPrismicClient } from '../../../services/prismic'
+import React from 'react'
 
 import styles from '../post.module.scss'
 import { Publication } from '../[slug]'
@@ -68,7 +69,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const prismic = getPrismicClient()
 
-  const response: Publication = await prismic.getByUID(
+  const response = await prismic.getByUID<Publication>(
     'publication',
     String(slug),
     {},

@@ -6,6 +6,8 @@ import { getPrismicClient } from '../../services/prismic'
 import { RichText } from 'prismic-dom'
 import Link from 'next/link'
 import { logError } from '../../shared/utils'
+import { Publication } from './[slug]'
+import React from 'react'
 
 export type Post = {
   slug: string
@@ -44,7 +46,7 @@ export default function posts({ posts }: PostsProps) {
 export const getStaticProps: GetStaticProps = async () => {
   const prismic = getPrismicClient()
 
-  const response = await prismic.query(
+  const response = await prismic.query<Publication>(
     [Prismic.predicates.at('document.type', 'publication')],
     {
       fetch: ['publication.title', 'publication.content'],
