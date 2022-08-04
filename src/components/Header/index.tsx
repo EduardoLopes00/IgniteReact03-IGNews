@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { ActiveLink } from '../ActiveLink'
 import { SignInButton } from '../SignInButton'
 import styles from './styles.module.scss'
+import React from 'react'
 
 export function Header() {
   return (

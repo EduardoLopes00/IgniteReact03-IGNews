@@ -1,5 +1,6 @@
 import { getByText, render, screen, waitFor } from '@testing-library/react'
 import { Async } from '.'
+import React from 'react'
 
 it('renders correctly', async () => {
   render(<Async />)

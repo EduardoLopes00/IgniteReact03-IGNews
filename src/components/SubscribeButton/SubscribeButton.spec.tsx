@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react'
 import { useSession, signIn } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { mocked } from 'ts-jest/utils'
+import React from 'react'
 
 import { SubscribeButton } from '.'
 

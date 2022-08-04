@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { api } from '../../services/api'
 import { getStripeJs } from '../../services/stripe.js'
 import styles from './styles.module.scss'
+import React from 'react'
 
 export function SubscribeButton() {
   const { data: session } = useSession()
